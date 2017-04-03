@@ -13,7 +13,7 @@ public class SpringTest {
 	
 	private Log log = LogFactory.getLog(getClass());
 	
-	@Test
+	//@Test
 	public void testLog() throws Exception{
 		log.debug("debug信息");
 		log.info("info信息");
@@ -29,7 +29,7 @@ public class SpringTest {
 	}
 	
 	// 测试事务
-	@Test
+	//@Test
 	public void testTransaction() throws Exception {
 		TestService testService  = (TestService) ac.getBean("testService");
 		testService.saveTwoUsers();
