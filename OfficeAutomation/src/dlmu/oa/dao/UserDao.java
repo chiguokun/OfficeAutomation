@@ -1,6 +1,8 @@
 package dlmu.oa.dao;
 
-public interface UserDao {
+import dlmu.oa.domain.User;
+
+public interface UserDao extends BaseDao<User>{
 	
 	
 

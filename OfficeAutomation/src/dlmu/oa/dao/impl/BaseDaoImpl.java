@@ -7,9 +7,11 @@ import javax.annotation.Resource;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 
 import dlmu.oa.dao.BaseDao;
 
+@Repository
 @SuppressWarnings("unchecked")
 public abstract class BaseDaoImpl<T> implements BaseDao<T>{
 	
@@ -22,7 +24,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
 	//Generic paradic 泛型
 		ParameterizedType pt = (ParameterizedType)this.getClass().getGenericSuperclass();
 		this.clazz = (Class)pt.getActualTypeArguments()[0];
-		System.out.println("clazz ==" +clazz.getSimpleName());
+		//System.out.println("clazz ==" +clazz.getSimpleName());
 	}
 
 	@Override

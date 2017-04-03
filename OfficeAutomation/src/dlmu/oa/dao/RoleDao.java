@@ -1,5 +1,7 @@
 package dlmu.oa.dao;
 
-public interface RoleDao {
+import dlmu.oa.domain.Role;
+
+public interface RoleDao extends BaseDao<Role>{
 
 }
