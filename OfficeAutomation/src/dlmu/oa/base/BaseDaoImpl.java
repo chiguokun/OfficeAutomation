@@ -1,4 +1,4 @@
-package dlmu.oa.dao.impl;
+package dlmu.oa.base;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -8,10 +8,12 @@ import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import dlmu.oa.dao.BaseDao;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 @Repository
+@Transactional //可以继承给子类
 @SuppressWarnings("unchecked")
 public abstract class BaseDaoImpl<T> implements BaseDao<T>{
 	
@@ -38,7 +40,6 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
 	 */
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
 		Object obj = getSession().get(clazz, id);
 		getSession().delete(obj);
 		
@@ -46,23 +47,23 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
 
 	@Override
 	public void update(T entity) {
-		// TODO Auto-generated method stub
 		getSession().update(entity);
 		
 	}
 
 	@Override
 	public T getById(Long id) {
-		// TODO Auto-generated method stub
+		if(id==null){
+			return null;
+		}
 		return (T)getSession().get(clazz,id);
 	}
 
 	@Override
 	public List<T> getByIds(Long[] ids) {
-		// TODO Auto-generated method stub
 		if(ids == null || ids.length ==0)
 		{
-			return null;
+			return java.util.Collections.EMPTY_LIST;
 		}
 		return getSession().createQuery(//
 				"FROM "+clazz.getSimpleName()+ " WHERE id IN(:ids)")//
@@ -71,7 +72,6 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
 
 	@Override
 	public List<T> findAll() {
-		// TODO Auto-generated method stub
 		return getSession().createQuery(//
 				"FROM "+clazz.getSimpleName())//
 				.list();

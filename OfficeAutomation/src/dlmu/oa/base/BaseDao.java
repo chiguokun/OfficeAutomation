@@ -1,4 +1,4 @@
-package dlmu.oa.dao;
+package dlmu.oa.base;
 
 import java.util.List;
 

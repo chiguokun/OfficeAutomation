@@ -26,6 +26,10 @@ public class RoleAction extends ActionSupport implements ModelDriven<Role>{
 	private String description;*/
 	Role model = new Role();
 	
+	@Override
+	public Role getModel() {
+		return model;
+	}
 	
 	public String list() throws Exception {	
 		List<Role> roleList = roleService.findAll();
@@ -49,7 +53,7 @@ public class RoleAction extends ActionSupport implements ModelDriven<Role>{
 	 * @throws Exception
 	 */
 	public String addUI() throws Exception {			
-		return "addUI";
+		return "saveUI";
 		
 	}
 	
@@ -84,7 +88,7 @@ public class RoleAction extends ActionSupport implements ModelDriven<Role>{
 		
 		//直接放到对象栈栈顶，直接获取栈顶元素
 		ActionContext.getContext().getValueStack().push(role);
-		return "editUI";
+		return "saveUI";
 		
 	}
 	public String edit() throws Exception {	
@@ -115,10 +119,6 @@ public class RoleAction extends ActionSupport implements ModelDriven<Role>{
 	public void setDescription(String description) {
 		this.description = description;
 	}*/
-	@Override
-	public Role getModel() {
-		// TODO Auto-generated method stub
-		return model;
-	}
+
 
 }

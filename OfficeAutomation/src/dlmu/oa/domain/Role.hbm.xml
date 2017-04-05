@@ -12,10 +12,10 @@
 		<property name="name"/>
 		<property name="description"/>
 		
-		<!-- users属性，本类与User的多对多关系 -->
+		<!-- users属性，本类与User的多对多 -->
 		<set name="users" table="oa_user_role">
-			<key column="userId"></key>
-			<many-to-many class="User" column="roleId"></many-to-many>
+			<key column="roleId"></key>
+			<many-to-many class="User" column="userId"></many-to-many>
 		</set>
 	</class>
 	
