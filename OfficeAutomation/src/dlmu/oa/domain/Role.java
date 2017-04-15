@@ -6,7 +6,6 @@ import java.util.Set;
 /**
  * 岗位
  * @author CGK
- *
  */
 public class Role {
 	
@@ -29,6 +28,11 @@ public class Role {
      * 与之关联的多个用户
      */
     private Set<User> users = new HashSet<User>();
+    
+    /**
+     * 与之关联的多个权限
+     */
+    private Set<Privilege> privileges = new HashSet<Privilege>();
 
 	public Long getId() {
 		return id;
@@ -62,8 +66,13 @@ public class Role {
 		this.users = users;
 	}
 
-	
-    
-    
+	public Set<Privilege> getPrivileges() {
+		return privileges;
+	}
+
+	public void setPrivileges(Set<Privilege> privileges) {
+		this.privileges = privileges;
+	}
+
 
 }

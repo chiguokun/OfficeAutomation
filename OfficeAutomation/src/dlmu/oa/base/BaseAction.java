@@ -8,6 +8,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
 import dlmu.oa.service.DepartmentService;
+import dlmu.oa.service.PrivilegeService;
 import dlmu.oa.service.RoleService;
 import dlmu.oa.service.UserService;
 
@@ -20,6 +21,8 @@ public abstract class BaseAction<T> extends ActionSupport implements ModelDriven
 	protected RoleService roleService;
 	@Resource
 	protected DepartmentService departmentService;
+	@Resource
+	protected PrivilegeService privilegeService;
 	
 	protected T model;
 	

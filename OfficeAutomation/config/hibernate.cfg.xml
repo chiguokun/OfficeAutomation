@@ -17,6 +17,7 @@
 	<mapping resource="dlmu/oa/domain/User.hbm.xml" />
 	<mapping resource="dlmu/oa/domain/Department.hbm.xml" />
 	<mapping resource="dlmu/oa/domain/Role.hbm.xml" />
+	<mapping resource="dlmu/oa/domain/Privilege.hbm.xml" />
 
 
 

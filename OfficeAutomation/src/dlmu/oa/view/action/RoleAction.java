@@ -1,5 +1,6 @@
 package dlmu.oa.view.action;
 
+import java.util.HashSet;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,26 +12,24 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
+import dlmu.oa.base.BaseAction;
+import dlmu.oa.domain.Privilege;
 import dlmu.oa.domain.Role;
+import dlmu.oa.service.PrivilegeService;
 import dlmu.oa.service.RoleService;
 
 @Controller
 @Scope("prototype")
-public class RoleAction extends ActionSupport implements ModelDriven<Role>{
+public class RoleAction extends BaseAction<Role>{
 	
-	@Resource
-	private RoleService roleService;
+	//选择数据存储，和已选数据回显
+	private Long[] privilegeIds;
 	
-	/*private Long id;
-	private String name;
-	private String description;*/
-	Role model = new Role();
-	
-	@Override
-	public Role getModel() {
-		return model;
-	}
-	
+	/**
+	 * 岗位列表
+	 * @return
+	 * @throws Exception
+	 */
 	public String list() throws Exception {	
 		List<Role> roleList = roleService.findAll();
 		ActionContext.getContext().put("roleList", roleList);
@@ -63,10 +62,7 @@ public class RoleAction extends ActionSupport implements ModelDriven<Role>{
 	 * @throws Exception
 	 */
 	public String add() throws Exception {	
-		/*Role role = new Role();
-		role.setName(name);
-		role.setDescription(description);*/
-		
+	
 		roleService.save(model);
 		
 		return "toList";
@@ -74,7 +70,7 @@ public class RoleAction extends ActionSupport implements ModelDriven<Role>{
 	}
 	
 	/**
-	 * 修改页面
+	 * 修改岗位页面
 	 * @return
 	 * @throws Exception
 	 */
@@ -91,6 +87,12 @@ public class RoleAction extends ActionSupport implements ModelDriven<Role>{
 		return "saveUI";
 		
 	}
+	
+	/**
+	 * 修改岗位信息
+	 * @return String
+	 * @throws Exception
+	 */
 	public String edit() throws Exception {	
 		Role role = roleService.getById(model.getId());
 		/*Role role = new Role(); //这样写role中其他属性的关联关系就没了
@@ -101,24 +103,59 @@ public class RoleAction extends ActionSupport implements ModelDriven<Role>{
 		return "toList";
 		
 	}
-	/*public Long getId() {
-		return id;
+
+	/**
+	 * 设置权限页面
+	 * @return
+	 * @throws Exception
+	 */
+	public String setPrivilegeUI() throws Exception {	
+		//数据准备，获取顶层权限
+		List<Privilege> topPrivilegeList = privilegeService.getTopPrivilege();
+		//直接放到对象栈中的Map
+		ActionContext.getContext().put("topPrivilegeList", topPrivilegeList);
+		
+		Role role = roleService.getById(model.getId());
+		//放入对象栈的栈顶
+		ActionContext.getContext().getValueStack().push(role);
+		
+		//初始化privilegeIds ，并回显已选择的权限
+		privilegeIds = new Long[role.getPrivileges().size()];
+		int index =0;
+		for(Privilege privilege : role.getPrivileges())
+		{
+			privilegeIds[index++] = privilege.getId();
+		}
+		
+		return "setPrivilegeUI";
+		
 	}
-	public void setId(Long id) {
-		this.id = id;
+	
+	/**
+	 * 修改岗位信息
+	 * @return String
+	 * @throws Exception
+	 */
+	public String setPrivilege() throws Exception {	
+		//获取选中的权限对象
+		Role role = roleService.getById(model.getId());
+		List<Privilege> privilegeList =privilegeService.getByIds(privilegeIds);
+		//保存新选择的权限信息
+		role.setPrivileges(new HashSet<Privilege>(privilegeList));
+		
+		//更新
+		roleService.update(role);
+		
+		return "toList";
+		
 	}
-	public String getName() {
-		return name;
+	public Long[] getPrivilegeIds() {
+		return privilegeIds;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setPrivilegeIds(Long[] privilegeIds) {
+		this.privilegeIds = privilegeIds;
 	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}*/
+	
 
 
 }
