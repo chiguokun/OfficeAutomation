@@ -20,6 +20,15 @@ public class PrivilegeServiceImpl extends BaseDaoImpl<Privilege> implements Priv
 				"FROM Privilege p WHERE p.parent IS NULL")//
 				.list();
 	}
+	/**
+	 * 获取数据库Privilege实体中所有的权限的Url集合。
+	 */
+	@Override
+	public List<Privilege> getAllPrivilegeUrl() {
+		return getSession().createQuery(//
+				"SELECT DISTINCT p.url FROM Privilege p WHERE p.url IS NOT NULL ")//
+				.list();
+	}
 
 	
 }

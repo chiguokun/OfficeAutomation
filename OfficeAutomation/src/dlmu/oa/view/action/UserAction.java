@@ -7,6 +7,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 
 import dlmu.oa.base.BaseAction;
@@ -104,7 +105,7 @@ public class UserAction extends BaseAction<User>{
 	
 		return "toList";
 	}
-	/* 初始化密码 */
+	/* 初始化密码 1234*/
 	public String initPassword() throws Exception {
 		// 1，从数据库中取出原对象
 		User user = userService.getById(model.getId());
@@ -118,6 +119,37 @@ public class UserAction extends BaseAction<User>{
 
 		return "toList";
 	}
+	
+	//登陆页面
+	public String loginUI() throws Exception {	
+		return "loginUI";
+		
+	}
+	
+	//
+	public String login() throws Exception {	
+		User user = userService.getByNameAndPassword(model.getLoginName(),model.getPassword());
+		if(user == null)
+		{
+			addFieldError("login", "用户名或密码不正确");
+			return "loginUI";
+		}
+		else{
+			//正确就登陆用户
+			ActionContext.getContext().getSession().put("user", user);
+			return "toIndex";
+		}
+		
+	}
+	
+	//注销用户
+	public String logout() throws Exception {	
+		ActionContext.getContext().getSession().remove("user");
+		return "logout";
+		
+	}
+	
+	
 	public Long getDepartmentId() {
 		return departmentId;
 	}

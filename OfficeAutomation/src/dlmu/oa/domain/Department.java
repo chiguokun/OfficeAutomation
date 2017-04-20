@@ -1,5 +1,6 @@
 package dlmu.oa.domain;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,7 +9,7 @@ import java.util.Set;
  * @author CGK
  *
  */
-public class Department {
+public class Department implements Serializable{
 	
 	/**
      * 部门编号

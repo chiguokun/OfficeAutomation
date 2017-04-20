@@ -12,6 +12,10 @@
 		<param-value>classpath:applicationContext*.xml</param-value>
 	</context-param>
 	
+	<listener>
+		<listener-class>dlmu.oa.listener.InitServletContextListener</listener-class>
+	</listener>
+	
 	<!-- 配置Spring的OpenSessionInViewFilter，以解决懒加载异常的问题 -->
 	<filter>
 		<filter-name>OpenSessionInViewFilter</filter-name>

@@ -1,11 +1,12 @@
 package dlmu.oa.domain;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * 权限实体类
  */
-public class Privilege {
+public class Privilege implements Serializable {
 
     private Long id;
 

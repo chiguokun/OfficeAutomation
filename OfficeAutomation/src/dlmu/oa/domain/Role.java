@@ -1,5 +1,6 @@
 package dlmu.oa.domain;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,7 +8,7 @@ import java.util.Set;
  * 岗位
  * @author CGK
  */
-public class Role {
+public class Role implements Serializable {
 	
     /**
      * 岗位编号

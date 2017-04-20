@@ -43,12 +43,12 @@
                         </td>
                     </tr>
                     <tr><td>登录名</td>
-                        <td><s:textfield name="loginName" cssClass="InputStyle"/> *
+                        <td><s:textfield name="loginName" cssClass="InputStyle required"/> *
 							（登录名要唯一）
 						</td>
                     </tr>
                     <tr><td>姓名</td>
-                        <td><s:textfield name="name" cssClass="InputStyle"/> *</td>
+                        <td><s:textfield name="name" cssClass="InputStyle required"/> *</td>
                     </tr>
 					<tr><td>性别</td>
                         <td>

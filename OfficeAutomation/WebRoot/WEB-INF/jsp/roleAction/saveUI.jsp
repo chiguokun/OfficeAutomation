@@ -34,7 +34,7 @@
                 <table cellpadding="0" cellspacing="0" class="mainForm">
                     <tr>
                         <td width="100">岗位名称</td>
-                        <td><s:textfield name="name" cssClass="InputStyle" /> *</td>
+                        <td><s:textfield name="name" cssClass="InputStyle required" /> *</td>
                     </tr>
                     <tr>
                         <td>岗位说明</td>

@@ -149,6 +149,8 @@ public class RoleAction extends BaseAction<Role>{
 		return "toList";
 		
 	}
+	
+	
 	public Long[] getPrivilegeIds() {
 		return privilegeIds;
 	}

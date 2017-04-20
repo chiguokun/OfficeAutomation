@@ -12,6 +12,8 @@ import dlmu.oa.domain.Role;
 public interface PrivilegeService extends BaseDao<Privilege>{
 
 	List<Privilege> getTopPrivilege();
+
+	List<Privilege> getAllPrivilegeUrl();
 	
 	
 }
