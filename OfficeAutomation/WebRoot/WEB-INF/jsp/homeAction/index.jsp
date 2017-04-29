@@ -10,7 +10,7 @@
 		<frame noresize name="TopMenu" scrolling="no" src="${pageContext.request.contextPath}/homeAction_top.action">
 		<frameset cols="180,*" id="resize">
 			<frame noresize name="menu" scrolling="yes" src="${pageContext.request.contextPath}/homeAction_left.action">
-			<frame noresize name="right" scrolling="yes" src="${pageContext.request.contextPath}/homeAction_right.action">
+			<frame noresize name="right" scrolling="yes"  src="${pageContext.request.contextPath}/homeAction_right.action">
 		</frameset>
 		<frame noresize name="status_bar" scrolling="no" src="${pageContext.request.contextPath}/homeAction_bottom.action">
 	</frameset>

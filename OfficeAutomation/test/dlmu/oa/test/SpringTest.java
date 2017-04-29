@@ -13,6 +13,8 @@ public class SpringTest {
 	
 	private Log log = LogFactory.getLog(getClass());
 	
+	
+	
 	//@Test
 	public void testLog() throws Exception{
 		log.debug("debug信息");

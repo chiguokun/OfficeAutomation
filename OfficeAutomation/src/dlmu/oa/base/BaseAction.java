@@ -4,12 +4,17 @@ import java.lang.reflect.ParameterizedType;
 
 import javax.annotation.Resource;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
+import dlmu.oa.domain.User;
 import dlmu.oa.service.DepartmentService;
+import dlmu.oa.service.ForumService;
 import dlmu.oa.service.PrivilegeService;
+import dlmu.oa.service.ReplyService;
 import dlmu.oa.service.RoleService;
+import dlmu.oa.service.TopicService;
 import dlmu.oa.service.UserService;
 
 
@@ -23,6 +28,12 @@ public abstract class BaseAction<T> extends ActionSupport implements ModelDriven
 	protected DepartmentService departmentService;
 	@Resource
 	protected PrivilegeService privilegeService;
+	@Resource
+	protected ForumService forumService;
+	@Resource
+	protected TopicService topicService;
+	@Resource
+	protected ReplyService replyService;
 	
 	protected T model;
 	
@@ -42,5 +53,15 @@ public abstract class BaseAction<T> extends ActionSupport implements ModelDriven
 	public T getModel() {
 		return model;
 	}
+	
+	/**
+	 * 获取当前登录的用户
+	 * 
+	 * @return
+	 */
+	protected User getCurrentUser() {
+		return (User) ActionContext.getContext().getSession().get("user");
+	}
+
 
 }
