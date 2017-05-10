@@ -15,6 +15,7 @@ import dlmu.oa.domain.Department;
 import dlmu.oa.domain.Role;
 import dlmu.oa.domain.User;
 import dlmu.oa.util.DepartmentUtil;
+import dlmu.oa.util.HqlHelper;
 
 @Controller
 @Scope("prototype")
@@ -22,11 +23,13 @@ public class UserAction extends BaseAction<User>{
 	
 	private Long departmentId;
 	private Long[] roleIds;
-
-	/* 列表 */
+	private int pageNum = 1;
+	
 	public String list() throws Exception {
-		List<User>  userList = userService.findAll();
-		ActionContext.getContext().put("userList", userList);
+		/*List<User>  userList = userService.findAll();
+		ActionContext.getContext().put("userList", userList);*/
+		HqlHelper hqlHelper = new HqlHelper(User.class);
+		hqlHelper.buildPageBeanForStruts2(pageNum, userService);
 		return "list";
 	}
 	/* 删除*/
@@ -162,8 +165,15 @@ public class UserAction extends BaseAction<User>{
 	public void setRoleIds(Long[] roleIds) {
 		this.roleIds = roleIds;
 	}
-	
-	
+	public int getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
+	}
+
+	/* 列表 */
 
 }
  

@@ -5,12 +5,16 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.type.LongType;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
+import dlmu.oa.cfg.Configuration;
+import dlmu.oa.domain.PageBean;
+import dlmu.oa.util.HqlHelper;
 
 @Repository
 @Transactional //可以继承给子类
@@ -83,6 +87,35 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
 	 */
 	protected Session getSession(){
 		return sessionFactory.getCurrentSession();
+	}
+	
+	@Override
+	public PageBean getPageBean(int pageNum, HqlHelper hqlHelper) {
+		//每页大小
+		int pageSize = Configuration.getPageSize();
+		//当前页
+		int currentPage = pageNum;
+		
+		Query queryList = getSession().createQuery(hqlHelper.getQueryListHql());
+		
+		if(hqlHelper.getParameters() != null && hqlHelper.getParameters().size() > 0) {
+			for(int i=0;i<hqlHelper.getParameters().size();i++){
+				queryList.setParameter(i, hqlHelper.getParameters().get(i));
+			}
+		}
+		queryList.setFirstResult((pageNum-1) * pageSize);
+		queryList.setMaxResults(pageSize);
+		List recordList = queryList.list();
+		
+		Query queryCount = getSession().createQuery(hqlHelper.getQueryCountHql());
+		if(hqlHelper.getParameters() != null && hqlHelper.getParameters().size() > 0) {
+			for(int i=0;i<hqlHelper.getParameters().size();i++){
+				queryCount.setParameter(i, hqlHelper.getParameters().get(i));
+			}
+		}
+		Long recordCount = (Long)queryCount.uniqueResult();
+		
+		return new PageBean(currentPage, pageSize, recordList, recordCount.intValue());
 	}
 
 }

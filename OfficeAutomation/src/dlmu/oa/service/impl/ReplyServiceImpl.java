@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import dlmu.oa.base.BaseDaoImpl;
+import dlmu.oa.cfg.Configuration;
 import dlmu.oa.domain.Forum;
+import dlmu.oa.domain.PageBean;
 import dlmu.oa.domain.Reply;
 import dlmu.oa.domain.Topic;
 import dlmu.oa.service.ReplyService;
@@ -40,6 +42,29 @@ public class ReplyServiceImpl extends BaseDaoImpl<Reply> implements ReplyService
 		getSession().update(forum);
 		getSession().update(topic);
 		
+	}
+
+	@Override
+	@Deprecated
+	public PageBean getPageBean(int pageNum, Topic topic) {
+		//每页大小
+		int pageSize = Configuration.getPageSize();
+		//当前页
+		int currentPage = pageNum;
+		//单页的记录
+		List recordList = getSession().createQuery(//
+					"FROM Reply r WHERE r.topic=? ORDER BY r.postTime ASC")//
+					.setParameter(0, topic)//
+					.setFirstResult((pageNum-1)*pageSize)//
+					.setMaxResults(pageSize)//
+					.list();
+		//查询总记录数
+		Long recordCount = (Long)getSession().createQuery(//
+				"SELECT COUNT(*) FROM Reply r WHERE r.topic=?")//
+				.setParameter(0, topic)//
+				.uniqueResult();
+		
+		return new PageBean(currentPage, pageSize, recordList, recordCount.intValue());
 	}
 
 }

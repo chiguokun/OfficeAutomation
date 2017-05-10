@@ -22,4 +22,15 @@ public class TestService {
 		// int a = 1 / 0; // 这行会抛异常
 		session.save(new User());
 	}
+	@Transactional
+	public void saveUsers_15() {
+		Session session = sessionFactory.getCurrentSession();
+		for(int i=0;i<15;i++){
+			User user = new User();
+			user.setLoginName("ceshi"+i);
+			user.setName("测试用户"+i);
+			session.save(user);
+		}
+		
+	}
 }

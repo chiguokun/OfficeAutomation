@@ -11,8 +11,10 @@ import com.opensymphony.xwork2.ActionContext;
 
 import dlmu.oa.base.BaseAction;
 import dlmu.oa.domain.Forum;
+import dlmu.oa.domain.PageBean;
 import dlmu.oa.domain.Reply;
 import dlmu.oa.domain.Topic;
+import dlmu.oa.util.HqlHelper;
 
 @Controller
 @Scope("prototype")
@@ -25,11 +27,21 @@ public class TopicAction extends BaseAction<Topic>{
 		//准备数据
 		Topic topic = topicService.getById(model.getId());
 		ActionContext.getContext().put("topic", topic);
-		
+	/*	
 		//准备数据（回帖）reply
 		List<Reply> replyList = replyService.findByTopic(topic);
-		ActionContext.getContext().put("replyList", replyList);
+		ActionContext.getContext().put("replyList", replyList);*/
 		
+		//准备分页后数据
+		HqlHelper hqlHelper = new HqlHelper(Reply.class,"r");
+		hqlHelper.addCondition("r.topic=?", topic)
+				.addOrder("r.postTime", 1)//
+				.buildPageBeanForStruts2(pageNum, replyService);
+		
+		/*//准备分页后数据
+		String queryListHQL = "FROM Reply r WHERE r.topic=? ORDER BY r.postTime ASC";
+		PageBean pageBean = topicService.getPageBean(pageNum, queryListHQL, new Object[]{topic});
+		ActionContext.getContext().getValueStack().push(pageBean);*/
 		return "show";
 	}
 	
@@ -61,6 +73,16 @@ public class TopicAction extends BaseAction<Topic>{
 		// 保存
 		topicService.save(model);
 		return "toShow";
+	}
+	
+	private int pageNum = 1;
+	
+	public int getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
 	}
 
 	public long getForumId() {

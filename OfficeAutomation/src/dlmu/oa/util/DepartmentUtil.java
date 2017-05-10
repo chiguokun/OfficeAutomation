@@ -6,6 +6,11 @@ import java.util.List;
 
 import dlmu.oa.domain.Department;
 
+/**
+ * 部门树状结构的生成
+ * @author CGK
+ *
+ */
 public class DepartmentUtil {
 	
 	public static List<Department> getAllDepartmentsByTree(List<Department> topList)
