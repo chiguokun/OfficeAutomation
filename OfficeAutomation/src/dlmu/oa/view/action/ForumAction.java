@@ -1,26 +1,20 @@
 package dlmu.oa.view.action;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.swing.text.html.ParagraphView;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
 
-import dlmu.oa.base.BaseAction;
+import dlmu.oa.base.ModelDrivenBaseAction;
 import dlmu.oa.domain.Forum;
-import dlmu.oa.domain.PageBean;
 import dlmu.oa.domain.Topic;
 import dlmu.oa.util.HqlHelper;
 
 @Controller
 @Scope("prototype")
-public class ForumAction extends BaseAction<Forum>{
+public class ForumAction extends ModelDrivenBaseAction<Forum>{
 	
 	/**
 	 * 0：表示查看所有主题

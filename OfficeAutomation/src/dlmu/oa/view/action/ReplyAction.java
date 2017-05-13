@@ -8,13 +8,13 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
 
-import dlmu.oa.base.BaseAction;
+import dlmu.oa.base.ModelDrivenBaseAction;
 import dlmu.oa.domain.Reply;
 import dlmu.oa.domain.Topic;
 
 @Controller
 @Scope("prototype")
-public class ReplyAction extends BaseAction<Reply>{
+public class ReplyAction extends ModelDrivenBaseAction<Reply>{
 	
 	private Long topicId;
 	//发表新回复页面

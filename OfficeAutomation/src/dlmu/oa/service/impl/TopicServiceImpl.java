@@ -93,8 +93,7 @@ public class TopicServiceImpl extends BaseDaoImpl<Topic> implements TopicService
 			}
 			
 	//开始查询：
-			//TODO sys
-			System.out.println("----------------"+queryListHQL + orderByType + typeDESCString);
+			//TODO 
 			List recordList = getSession().createQuery(//
 					queryListHQL + orderByType + typeDESCString)//
 					.setParameter(0,(Forum)parameters.get("forum"))//

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 
-import dlmu.oa.base.BaseAction;
+import dlmu.oa.base.ModelDrivenBaseAction;
 import dlmu.oa.domain.Department;
 import dlmu.oa.domain.Role;
 import dlmu.oa.domain.User;
@@ -19,7 +19,7 @@ import dlmu.oa.util.HqlHelper;
 
 @Controller
 @Scope("prototype")
-public class UserAction extends BaseAction<User>{
+public class UserAction extends ModelDrivenBaseAction<User>{
 	
 	private Long departmentId;
 	private Long[] roleIds;

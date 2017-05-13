@@ -12,7 +12,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
-import dlmu.oa.base.BaseAction;
+import dlmu.oa.base.ModelDrivenBaseAction;
 import dlmu.oa.domain.Privilege;
 import dlmu.oa.domain.Role;
 import dlmu.oa.service.PrivilegeService;
@@ -20,7 +20,7 @@ import dlmu.oa.service.RoleService;
 
 @Controller
 @Scope("prototype")
-public class RoleAction extends BaseAction<Role>{
+public class RoleAction extends ModelDrivenBaseAction<Role>{
 	
 	//选择数据存储，和已选数据回显
 	private Long[] privilegeIds;

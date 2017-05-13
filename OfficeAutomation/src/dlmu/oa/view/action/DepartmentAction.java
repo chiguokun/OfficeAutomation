@@ -7,13 +7,13 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
 
-import dlmu.oa.base.BaseAction;
+import dlmu.oa.base.ModelDrivenBaseAction;
 import dlmu.oa.domain.Department;
 import dlmu.oa.util.DepartmentUtil;
 
 @Controller
 @Scope("prototype")
-public class DepartmentAction extends BaseAction<Department>{
+public class DepartmentAction extends ModelDrivenBaseAction<Department>{
 	
 	private Long parentId;
 

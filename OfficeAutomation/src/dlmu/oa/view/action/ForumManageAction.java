@@ -7,12 +7,12 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
 
-import dlmu.oa.base.BaseAction;
+import dlmu.oa.base.ModelDrivenBaseAction;
 import dlmu.oa.domain.Forum;
 
 @Controller
 @Scope("prototype")
-public class ForumManageAction extends BaseAction<Forum>{
+public class ForumManageAction extends ModelDrivenBaseAction<Forum>{
 	
 	/*列表*/
 	public String list() throws Exception {

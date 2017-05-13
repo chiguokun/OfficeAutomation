@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 
-import dlmu.oa.base.BaseAction;
+import dlmu.oa.base.ModelDrivenBaseAction;
 import dlmu.oa.domain.Forum;
 import dlmu.oa.domain.PageBean;
 import dlmu.oa.domain.Reply;
@@ -18,7 +18,7 @@ import dlmu.oa.util.HqlHelper;
 
 @Controller
 @Scope("prototype")
-public class TopicAction extends BaseAction<Topic>{
+public class TopicAction extends ModelDrivenBaseAction<Topic>{
 	
 	private long forumId;
 	

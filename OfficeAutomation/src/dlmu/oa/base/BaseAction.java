@@ -1,24 +1,30 @@
 package dlmu.oa.base;
 
-import java.lang.reflect.ParameterizedType;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import org.apache.struts2.ServletActionContext;
+
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.ModelDriven;
 
 import dlmu.oa.domain.User;
+import dlmu.oa.service.ApplicationService;
+import dlmu.oa.service.ApplicationTemplateService;
 import dlmu.oa.service.DepartmentService;
 import dlmu.oa.service.ForumService;
 import dlmu.oa.service.PrivilegeService;
+import dlmu.oa.service.ProcessDefinitionService;
 import dlmu.oa.service.ReplyService;
 import dlmu.oa.service.RoleService;
 import dlmu.oa.service.TopicService;
 import dlmu.oa.service.UserService;
 
-
-public abstract class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
+public class BaseAction extends ActionSupport {
 	
 	@Resource
 	protected UserService userService;
@@ -34,25 +40,13 @@ public abstract class BaseAction<T> extends ActionSupport implements ModelDriven
 	protected TopicService topicService;
 	@Resource
 	protected ReplyService replyService;
-	
-	protected T model;
-	
-	public BaseAction(){
-		
-		//通过反射生成model实例
-		try {
-			ParameterizedType pType = (ParameterizedType)this.getClass().getGenericSuperclass();
-			Class clazz = (Class)pType.getActualTypeArguments()[0];
-			model = (T) clazz.newInstance();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-	
-	@Override
-	public T getModel() {
-		return model;
-	}
+	@Resource
+	protected ProcessDefinitionService processDefinitionService;
+	@Resource
+	protected ApplicationTemplateService applicationTemplateService;
+	@Resource
+	protected ApplicationService applicationService;
+
 	
 	/**
 	 * 获取当前登录的用户
@@ -63,5 +57,18 @@ public abstract class BaseAction<T> extends ActionSupport implements ModelDriven
 		return (User) ActionContext.getContext().getSession().get("user");
 	}
 
-
+	protected String saveUploadFile(File uploadTemp) {
+		SimpleDateFormat sdf = new SimpleDateFormat("/yyyy/MM/dd/");
+		String basePath = ServletActionContext.getServletContext().getRealPath("/WEB-INF/upload_file");
+		String subPath = sdf.format(new Date());
+		//>>如果文件不存在则创建
+		File dir = new File(basePath + subPath);
+		if(!dir.exists()){
+			dir.mkdirs(); //递归创建所有不存在的文件夹
+		}
+		String path = basePath + subPath + UUID.randomUUID().toString();
+		
+		uploadTemp.renameTo(new File(path)); //移动文件从临时区到指定目录下
+		return path;
+	}
 }

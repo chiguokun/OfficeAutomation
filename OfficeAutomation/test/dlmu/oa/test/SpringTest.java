@@ -3,6 +3,7 @@ package dlmu.oa.test;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.SessionFactory;
+import org.jbpm.api.ProcessEngine;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -24,7 +25,7 @@ public class SpringTest {
 	}
 	
 	// 测试SessionFactory
-	//@Test
+	@Test
 	public void testSessionFactory() throws Exception {
 		SessionFactory sessionFactory = (SessionFactory) ac.getBean("sessionFactory");
 		System.out.println(sessionFactory);
@@ -39,6 +40,12 @@ public class SpringTest {
 	
 	// 测试事务
 	@Test
+	public void testProcessEngine() throws Exception {
+		ProcessEngine processEngine  = (ProcessEngine) ac.getBean("processEngine");
+		System.out.println("-->" + processEngine);
+	}
+	// 测试事务
+	//@Test
 		public void testSave_15() throws Exception {
 			TestService testService  = (TestService) ac.getBean("testService");
 			testService.saveUsers_15();
