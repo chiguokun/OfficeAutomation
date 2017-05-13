@@ -17,9 +17,11 @@
 		<property name="email"/>
 		<property name="phoneNumber"/>
 		<property name="description"/>
+		<property name="uploadPath" />
+		<property name="showSrcPath" />
 		
 		<!--department属性，本类与Department的多对一关系  -->
-		<many-to-one name="department" class="Department" column="departmentId"></many-to-one>
+		<many-to-one name="department" class="Department" column="departmentId" lazy="false"></many-to-one>
 		
 		<!-- roles属性，本类与Role的多对多 -->
 		<set name="roles" table="oa_user_role" lazy="false">

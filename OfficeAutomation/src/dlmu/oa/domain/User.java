@@ -10,7 +10,7 @@ import com.opensymphony.xwork2.ActionContext;
 /**
  * 用户实体
  * 
- * @author CGK
+ * @author CGKs
  * 
  */
 public class User implements Serializable{
@@ -64,6 +64,17 @@ public class User implements Serializable{
 	 * 备注
 	 */
 	private String description;
+	
+	/**
+	 * 头像图片上传时存储的真实路径
+	 */
+	private String uploadPath ;
+	
+	/**
+	 * 头像图片在页面显示时链接的路径（src)
+	 */
+	private String showSrcPath;
+	
 
 	/**
 	 * 判读本用户是否有指定名称的权限
@@ -208,5 +219,27 @@ public class User implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public String getUploadPath() {
+		return uploadPath;
+	}
+
+	public void setUploadPath(String uploadPath) {
+		this.uploadPath = uploadPath;
+	}
+
+	public String getShowSrcPath() {
+		return showSrcPath;
+	}
+
+	public void setShowSrcPath(String showSrcPath) {
+		this.showSrcPath = showSrcPath;
+	}
+
+	
+
+	
+
+	
 
 }

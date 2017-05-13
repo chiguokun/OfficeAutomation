@@ -1,13 +1,16 @@
 package dlmu.oa.view.action;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.servlet.jsp.PageContext;
+
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionContext;
 
 import dlmu.oa.base.ModelDrivenBaseAction;
@@ -56,6 +59,11 @@ public class UserAction extends ModelDrivenBaseAction<User>{
 		
 		List<Role> roleList = roleService.getByIds(roleIds);
 		model.setRoles(new HashSet<Role>(roleList));
+		
+		//给用户添加上默认头像图片地址
+		String basePath = ServletActionContext.getRequest().getContextPath(); //得到路径 /OfficeAutomation
+		String path = basePath + "/style/images/defaultAvatar.gif"; //默认图片为ultAvatar.gif
+		model.setShowSrcPath(path);
 		
 		userService.save(model);
 		return "toList";
@@ -172,7 +180,7 @@ public class UserAction extends ModelDrivenBaseAction<User>{
 	public void setPageNum(int pageNum) {
 		this.pageNum = pageNum;
 	}
-
+	
 	/* 列表 */
 
 }
