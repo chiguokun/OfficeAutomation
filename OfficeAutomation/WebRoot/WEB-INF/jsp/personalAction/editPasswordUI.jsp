@@ -35,14 +35,16 @@
 							<img border="0" width="4" height="7" src="${pageContext.request.contextPath}/style/blue/images/item_point.gif" />
 							请输入原密码
 						</td>
-						<td><input type="password" name="oldPassword" class="InputStyle required" /> *</td>
+						<td width="270"><input type="password" name="oldPassword" class="InputStyle required" /> *<td><font color="red"><s:fielderror/></font></td></td>
+						
 					</tr>
+					
 					<tr height="25">
 						<td width="150">
 							<img border="0" width="4" height="7" src="${pageContext.request.contextPath}/style/blue/images/item_point.gif" />
 							请填写新密码
 						</td>
-						<td><input type="password" name="password" class="InputStyle required" /> *</td>
+						<td><input type="password"  name="newPassword" minlength="4" class="InputStyle required" /> *</td>
 						<td></td>
 					</tr>
 					<tr height="25">
@@ -50,7 +52,7 @@
 							<img border="0" width="4" height="7" src="${pageContext.request.contextPath}/style/blue/images/item_point.gif" />
 							再次输入新密码
 						</td>
-						<td><input type="password" name="password2" class="InputStyle" /></td>
+						<td><input type="password"  name="confirm_password" minlength="4" class="InputStyle required {equalTo:'[name=newPassword]'}" /></td>
 						<td></td>
 					</tr>
                 </table>

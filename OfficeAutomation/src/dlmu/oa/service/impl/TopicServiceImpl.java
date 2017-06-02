@@ -47,6 +47,37 @@ public class TopicServiceImpl extends BaseDaoImpl<Topic> implements TopicService
 	}
 	
 	/**
+	 * 删除该主题帖
+	 */
+	@Override
+	public void delete(Long id) {
+		/**先获取信息和维护信息，在删除**/
+		/*维护相关的信息*/
+		Topic topic = getById(id);
+		
+		Forum forum = topic.getForum();
+		//主题数 -1
+		forum.setTopicCount(forum.getTopicCount() -1);
+		//文章数 -1 -该主题对应的回复数
+		forum.setArticleCount(forum.getArticleCount() -1 - topic.getReplyCount()); // 文章数（原有的文章数-1-该主题的回复数）
+		//如果删除的该主题为最新发表的主题，则将让剩余的主题排序选择时间发布最晚的主题作为最新发布主题
+		if(forum.getLastTopic().getId() ==topic.getId())
+		{
+		  Topic lastTopic = (Topic) getSession().createQuery(//
+						  "FROM Topic t WHERE t.id !=? ORDER BY t.lastUpdateTime DESC")//
+						  .setParameter(0, topic.getId())//
+						  .setMaxResults(1)//
+						  .setFirstResult(0)//
+						  .uniqueResult();
+		  forum.setLastTopic(lastTopic);
+		}
+		//更新维护的数据
+		getSession().update(forum);
+		
+		/*删除主题*/
+		super.delete(id);
+	}
+	/**
 	 * parameters顺序为：
 	 * forum,viewType,orderBy,Type_DESC
 	 */

@@ -8,10 +8,10 @@
 <body leftmargin=0 topmargin=0 marginwidth=0 marginheight=0>
 
 <div id="StatusBar">
-    <div id="Online">
+   <!--  <div id="Online">
     	在线人员：共 <span class="OnlineUser" id="onlineUserNum"></span> 人<span class="OnlineView">
         <a href="javascript:void(0)">[查看在线名单]</a>
-</span></div>
+</span></div> -->
 
     <div id="Info">
     	<a href="javascript:void(0)" title = "大连海事大学首页" target=_blank >大连海事大学首页</a> |

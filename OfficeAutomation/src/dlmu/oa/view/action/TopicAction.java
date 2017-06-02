@@ -75,6 +75,24 @@ public class TopicAction extends ModelDrivenBaseAction<Topic>{
 		return "toShow";
 	}
 	
+	/*删除*/
+	public String delete() throws Exception{
+		
+		topicService.delete(model.getId());
+		
+		return "toList";
+	}
+	
+	/**
+	 * 修改帖子状态
+	 */
+	public String chgType() throws Exception{
+		Topic topic = topicService.getById(model.getId());
+		topic.setType(model.getType());
+		topicService.update(topic);
+		return "toShow";
+	}
+	
 	private int pageNum = 1;
 	
 	public int getPageNum() {

@@ -34,7 +34,7 @@
         <!--显示数据列表-->
         <tbody id="TableData" class="dataContainer" datakey="userList">
         
-        <s:iterator value="recordList"> 
+        <s:iterator value="recordList" status="status"> 
             <tr class="TableDetail1 template">
                 <td>${loginName}&nbsp;</td>
                 <td>${name}&nbsp;</td>
@@ -47,10 +47,14 @@
                 </td>
                 <td>${description}&nbsp;</td>
                 <td>
+                	
                 	<s:a action="userAction_delete?id=%{id}" onclick="return delConfirm()">删除</s:a>
                     <s:a action="userAction_editUI?id=%{id}">修改</s:a>
 					<s:a action="userAction_initPassword?id=%{id}" onclick="return window.confirm('您确定要初始化密码为1234吗？')">初始化密码</s:a>
-                </td>
+					
+					<%-- <input type="text" id="snum_${status.index }" name="snum" value="xxx"/>
+					<a href="JavaScript:;" onclick="location ='text?snum='+document.getElementById('snum_${status.index}').value;">跳 转</a>
+             --%>    </td>
             </tr>
         </s:iterator> 
             

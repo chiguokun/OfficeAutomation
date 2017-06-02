@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.jbpm.api.task.Task;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -18,6 +19,7 @@ import dlmu.oa.base.BaseAction;
 import dlmu.oa.domain.Application;
 import dlmu.oa.domain.ApplicationTemplate;
 import dlmu.oa.domain.ApproveInfo;
+import dlmu.oa.domain.PageBean;
 import dlmu.oa.domain.TaskView;
 import dlmu.oa.util.HqlHelper;
 
@@ -91,8 +93,9 @@ public class FlowAction extends BaseAction {
 	// ================================== 审批人有关
 	/** 待我审批（我的任务列表） */
 	public String myTaskList() throws Exception {
-		List<TaskView> taskViewList = applicationService.getMyTaskViewList(getCurrentUser());
-		ActionContext.getContext().put("taskViewList",taskViewList);
+		//带有分页效果的我的待审批列表
+		PageBean pageBean = applicationService.getMyTaskViewList(pageNum,getCurrentUser());
+		ActionContext.getContext().getValueStack().push(pageBean);
 		return "myTaskList";
 	}
 	

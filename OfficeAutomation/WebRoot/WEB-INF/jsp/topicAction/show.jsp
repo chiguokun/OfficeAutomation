@@ -58,10 +58,10 @@
 							<img border="0" src="${pageContext.request.contextPath}/style/images/reply.gif" />
 							回复
 						</s:a>
-						<a href="moveUI.html"><img border="0" src="${pageContext.request.contextPath}/style/images/edit.gif" />移动到其他版块</a>
-						<a href="#" onClick="return confirm('要把本主题设为精华吗？')"><img border="0" src="${pageContext.request.contextPath}/style/images/topicType_1.gif" />精华</a>
-						<a href="#" onClick="return confirm('要把本主题设为置顶吗？')"><img border="0" src="${pageContext.request.contextPath}/style/images/topicType_2.gif" />置顶</a>
-						<a href="#" onClick="return confirm('要把本主题设为普通吗？')"><img border="0" src="${pageContext.request.contextPath}/style/images/topicType_0.gif" />普通</a>
+						<s:a action="moveUI.html"><img border="0" src="${pageContext.request.contextPath}/style/images/edit.gif" />移动到其他版块</s:a>
+						<s:a action="topicAction_chgType?id=%{id}&type=1" onClick="return confirm('要把本主题设为精华吗？')"><img border="0" src="${pageContext.request.contextPath}/style/images/topicType_1.gif" />精华</s:a>
+						<s:a action="topicAction_chgType?id=%{id}&type=2" onClick="return confirm('要把本主题设为置顶吗？')"><img border="0" src="${pageContext.request.contextPath}/style/images/topicType_2.gif" />置顶</s:a>
+						<s:a action="topicAction_chgType?id=%{id}&type=0" onClick="return confirm('要把本主题设为普通吗？')"><img border="0" src="${pageContext.request.contextPath}/style/images/topicType_0.gif" />普通</s:a>
 					</td>
 					<td width="3" class="ForumPageTableTitleRight">&nbsp;</td>
 				</tr>
@@ -86,8 +86,9 @@
 							<ul class="TopicFunc">
 								<!--操作列表-->
 								<li class="TopicFuncLi">
-									<a class="detail" href="${pageContext.request.contextPath}/BBS_Topic/saveUI.html"><img border="0" src="${pageContext.request.contextPath}/style/images/edit.gif" />编辑</a>
-									<a class="detail" href="#" onClick="return confirm('确定要删除本帖吗？')"><img border="0" src="${pageContext.request.contextPath}/style/images/delete.gif" />删除</a>
+									<%-- <a class="detail" href="${pageContext.request.contextPath}/BBS_Topic/saveUI.html"><img border="0" src="${pageContext.request.contextPath}/style/images/edit.gif" />编辑</a>
+									 --%>
+									 <s:a cssClass="detail" action="topicAction_delete?id=%{id}&forumId=%{#topic.forum.id}" onClick="return confirm('确定要删除本帖吗？')"><img border="0" src="${pageContext.request.contextPath}/style/images/delete.gif" />删除</s:a>
 								</li>
 								<!-- 文章表情与标题 -->
 								<li class="TopicSubject">

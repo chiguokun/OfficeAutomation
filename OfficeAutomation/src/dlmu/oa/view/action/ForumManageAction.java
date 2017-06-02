@@ -9,7 +9,11 @@ import com.opensymphony.xwork2.ActionContext;
 
 import dlmu.oa.base.ModelDrivenBaseAction;
 import dlmu.oa.domain.Forum;
-
+/**
+ * 论坛管理：版块管理 
+ * @author CGK
+ *
+ */
 @Controller
 @Scope("prototype")
 public class ForumManageAction extends ModelDrivenBaseAction<Forum>{

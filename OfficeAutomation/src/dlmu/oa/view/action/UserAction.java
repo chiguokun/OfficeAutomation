@@ -1,10 +1,9 @@
 package dlmu.oa.view.action;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
-import javax.servlet.jsp.PageContext;
+import java.util.Set;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.struts2.ServletActionContext;
@@ -28,11 +27,28 @@ public class UserAction extends ModelDrivenBaseAction<User>{
 	private Long[] roleIds;
 	private int pageNum = 1;
 	
+	/**用户管理列表**/
 	public String list() throws Exception {
 		/*List<User>  userList = userService.findAll();
 		ActionContext.getContext().put("userList", userList);*/
-		HqlHelper hqlHelper = new HqlHelper(User.class);
-		hqlHelper.buildPageBeanForStruts2(pageNum, userService);
+		if(getCurrentUser().getLoginName().equals("admin")){ //如果为管理员，则获取所有部门用户
+			HqlHelper hqlHelper = new HqlHelper(User.class);
+			hqlHelper.buildPageBeanForStruts2(pageNum, userService);
+		}
+		else{ //如果不是管理员，只获取其所在部门及下属部门的用户信息
+			User user = userService.getById(getCurrentUser().getId());
+			Department department = user.getDepartment();
+			//System.out.println("--------------"+department.getName()+"-----"+department.getChildren());
+			Set<Department> deSet = new HashSet<Department>();
+			//添加本部门，以及添加该用户所有下属部门。
+			deSet.add(department);
+			deSet.addAll(department.getChildren());
+			HqlHelper hqlHelper = new HqlHelper(User.class,"u");
+			hqlHelper.addCondition("deSet", "u.department IN (:deSet)", deSet)
+					.buildPageBeanForStruts2(pageNum, userService);
+			
+		}
+		
 		return "list";
 	}
 	/* 删除*/

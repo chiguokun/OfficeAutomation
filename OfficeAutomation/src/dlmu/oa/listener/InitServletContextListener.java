@@ -12,7 +12,11 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import dlmu.oa.domain.Privilege;
 import dlmu.oa.service.PrivilegeService;
-
+/**
+ * 
+ * @author CGK
+ *
+ */
 public class InitServletContextListener implements ServletContextListener {
 
 	@Override

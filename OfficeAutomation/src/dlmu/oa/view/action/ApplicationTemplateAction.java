@@ -18,7 +18,11 @@ import com.opensymphony.xwork2.ActionContext;
 
 import dlmu.oa.base.ModelDrivenBaseAction;
 import dlmu.oa.domain.ApplicationTemplate;
-
+/**
+ * 申请模板
+ * @author CGK
+ *
+ */
 @Controller
 @Scope("prototype")
 public class ApplicationTemplateAction extends ModelDrivenBaseAction<ApplicationTemplate>{

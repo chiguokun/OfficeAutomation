@@ -26,6 +26,8 @@ public class PersonalAction extends ModelDrivenBaseAction<User>{
 	
 	private File headImageUpload;
 	private String imagePath; //真正用于页面显示的链接路径
+	private String oldPassword;
+	private String newPassword;//新密码
 	
 	public String editImageUI() throws Exception{
 		System.out.println(ServletActionContext.getServletContext().getRealPath("/"));
@@ -53,6 +55,21 @@ public class PersonalAction extends ModelDrivenBaseAction<User>{
 		
 		return "editPasswordUI";
 	}
+	
+	public String editPassword() throws Exception {
+		User user = userService.getByNameAndPassword(getCurrentUser().getLoginName(), oldPassword);
+		
+		if(user != null){//如果user不为空，说明原先密码输入正确
+			user.setPassword(newPassword);
+			System.out.println(oldPassword+"----------->"+newPassword+"-----》"+user.getPassword()+"---->"+user.getLoginName());
+			userService.updatePassword(user);
+		}else {
+			addFieldError("oldPassword", "原密码输入不正确");
+		}
+		
+		return "editPasswordUI";
+	}
+	
 
 	public File getHeadImageUpload() {
 		return headImageUpload;
@@ -69,6 +86,26 @@ public class PersonalAction extends ModelDrivenBaseAction<User>{
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
+
+	public String getOldPassword() {
+		return oldPassword;
+	}
+
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	
+
+
 	
 	
 	

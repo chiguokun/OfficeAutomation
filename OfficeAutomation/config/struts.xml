@@ -87,7 +87,9 @@
 		<action name="topicAction_*" class="topicAction" method="{1}">
 			<result name="show">/WEB-INF/jsp/topicAction/show.jsp</result>
 			<result name="addUI">/WEB-INF/jsp/topicAction/addUI.jsp</result>
+			<result name="chgType" type="redirectAction">topicAction_show?id=${id}</result>
 			<result name="toShow" type="redirectAction">topicAction_show?id=${id}</result>
+			<result name="toList" type="redirectAction">forumAction_show?id=${forumId}</result>
 		</action> 
 		
 		<!-- 论坛：回复相关功能 -->
@@ -140,6 +142,8 @@
 		<action name="personalAction_*" class="personalAction" method="{1}">
 			<result name="editImageUI">/WEB-INF/jsp/personalAction/editImageUI.jsp</result>
 			<result name="editPasswordUI">/WEB-INF/jsp/personalAction/editPasswordUI.jsp</result>
+			<result name="editPassword" type="redirectAction">personalAction_editImageUI</result>
+			
 			<result name="toEditImageUI" type="redirectAction">personalAction_editImageUI</result>
 		</action> 
 		

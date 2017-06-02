@@ -1,6 +1,7 @@
 package dlmu.oa.base;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,7 +9,6 @@ import javax.annotation.Resource;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.type.LongType;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -95,22 +95,37 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
 		int pageSize = Configuration.getPageSize();
 		//当前页
 		int currentPage = pageNum;
-		
 		Query queryList = getSession().createQuery(hqlHelper.getQueryListHql());
 		
 		if(hqlHelper.getParameters() != null && hqlHelper.getParameters().size() > 0) {
 			for(int i=0;i<hqlHelper.getParameters().size();i++){
-				queryList.setParameter(i, hqlHelper.getParameters().get(i));
+				Object obj = hqlHelper.getParameters().get(i);
+				if(obj instanceof Collection<?>&&hqlHelper.getParamName()!=null){ //如果参数为集合，说明会用到IN(:parametName);
+					queryList.setParameterList(hqlHelper.getParamName(), (Collection<?>)obj);  
+                }else if(obj instanceof Object[]&&hqlHelper.getParamName()!=null){  
+                	queryList.setParameterList(hqlHelper.getParamName(), (Collection<?>)obj);  
+                }else{  
+                	queryList.setParameter(i, obj);  
+                }  
+				//queryList.setParameter(i, hqlHelper.getParameters().get(i));
 			}
 		}
-		queryList.setFirstResult((pageNum-1) * pageSize);
-		queryList.setMaxResults(pageSize);
+		queryList.setFirstResult((pageNum-1) * pageSize); //开始位置
+		queryList.setMaxResults(pageSize); //每页大小
 		List recordList = queryList.list();
 		
 		Query queryCount = getSession().createQuery(hqlHelper.getQueryCountHql());
 		if(hqlHelper.getParameters() != null && hqlHelper.getParameters().size() > 0) {
 			for(int i=0;i<hqlHelper.getParameters().size();i++){
-				queryCount.setParameter(i, hqlHelper.getParameters().get(i));
+				Object obj = hqlHelper.getParameters().get(i);
+				if(obj instanceof Collection<?>&&hqlHelper.getParamName()!=null){  
+					queryCount.setParameterList(hqlHelper.getParamName(), (Collection<?>)obj);  
+                }else if(obj instanceof Object[]&&hqlHelper.getParamName()!=null){  
+                	queryCount.setParameterList(hqlHelper.getParamName(), (Collection<?>)obj);  
+                }else{  
+                	queryCount.setParameter(i, obj);  
+                }  
+				//queryCount.setParameter(i, hqlHelper.getParameters().get(i));
 			}
 		}
 		Long recordCount = (Long)queryCount.uniqueResult();

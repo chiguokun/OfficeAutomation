@@ -29,7 +29,7 @@ jQuery.extend(jQuery.validator.messages, {
 });
 
 	$(function(){
-		$("form").validate();
+		$("form").validate( );
 	});
 
 </script>

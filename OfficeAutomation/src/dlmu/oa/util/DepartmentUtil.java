@@ -8,26 +8,28 @@ import dlmu.oa.domain.Department;
 
 /**
  * 部门树状结构的生成
+ * 
  * @author CGK
- *
+ * 
  */
 public class DepartmentUtil {
-	
-	public static List<Department> getAllDepartmentsByTree(List<Department> topList)
-	{
+
+	public static List<Department> getAllDepartmentsByTree(
+			List<Department> topList) {
 		List<Department> departmentList = new ArrayList<Department>();
 		createDepartmentTree(topList, "┣", departmentList);
 		return departmentList;
 	}
-	
-	private static void createDepartmentTree(Collection<Department> topList,String prefix,List<Department> departmentList){
-		for(Department top : topList)
-		{
+
+	private static void createDepartmentTree(Collection<Department> topList,
+			String prefix, List<Department> departmentList) {
+		for (Department top : topList) {
 			Department copy = new Department();
 			copy.setId(top.getId());
-			copy.setName( prefix +top.getName());
+			copy.setName(prefix + top.getName());
 			departmentList.add(copy);
-			createDepartmentTree(top.getChildren(), "　"+prefix, departmentList);
+			createDepartmentTree(top.getChildren(), "　" + prefix,
+					departmentList);
 		}
 	}
 }

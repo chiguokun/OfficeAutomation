@@ -1,6 +1,7 @@
 package dlmu.oa.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -14,7 +15,8 @@ public class HqlHelper {
 	private String whereClause = ""; //Where子句，可选
 	private String orderByClause = ""; //OrderBy子句，可选
 	
-	private List<Object> parameters = new ArrayList<Object>();
+	private List<Object> parameters = new ArrayList<Object>(); //参数值
+	String paramName = null;//参数名
 	
 	/**
 	 * 生产from子句，默认别名为'o';
@@ -57,6 +59,20 @@ public class HqlHelper {
 	}
 	
 	/**
+	 * 用于连接传递了指定参数名的判断条件
+	 * @param paramsName 参数名
+	 * @param condition
+	 * @param params
+	 * @return
+	 */
+	
+	public HqlHelper addCondition(String name,String condition, Object... params){
+		paramName = name;
+		addCondition(condition, params);
+		return this;
+	}
+	
+	/**
 	 * 如果满足第一个条件，则拼接WHERE子句
 	 * @param append
 	 * @param condition
@@ -71,6 +87,7 @@ public class HqlHelper {
 		return this;
 	}
 	
+
 	/**
 	 * 拼接OrderBy子句
 	 * 
@@ -162,6 +179,16 @@ public class HqlHelper {
 	public void setParameters(List<Object> parameters) {
 		this.parameters = parameters;
 	}
+
+	public String getParamName() {
+		return paramName;
+	}
+
+	public void setParamName(String paramName) {
+		this.paramName = paramName;
+	}
+
+	
 	
 	
 

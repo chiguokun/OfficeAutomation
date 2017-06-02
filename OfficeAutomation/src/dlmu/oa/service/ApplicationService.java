@@ -6,6 +6,7 @@ import java.util.Set;
 import dlmu.oa.base.BaseDao;
 import dlmu.oa.domain.Application;
 import dlmu.oa.domain.ApproveInfo;
+import dlmu.oa.domain.PageBean;
 import dlmu.oa.domain.TaskView;
 import dlmu.oa.domain.User;
 
@@ -28,7 +29,7 @@ public interface ApplicationService extends BaseDao<Application> {
 	 * @param currentUser
 	 * @return
 	 */
-	List<TaskView> getMyTaskViewList(User currentUser);
+	PageBean getMyTaskViewList(int pageNum ,User currentUser);
 
 	/**
 	 * 执行审批处理

@@ -21,5 +21,11 @@ public class UserServiceImpl extends BaseDaoImpl<User> implements UserService {
 				.setParameter(1, DigestUtils.md5Hex(password))//
 				.uniqueResult();
 	}
+
+	@Override
+	public void updatePassword(User user) {
+		user.setPassword(DigestUtils.md5Hex(user.getPassword()));
+		getSession().update(user);
+	}
 	
 }

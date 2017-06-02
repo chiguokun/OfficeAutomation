@@ -16,8 +16,10 @@ import org.jbpm.api.task.Task;
 import org.springframework.stereotype.Service;
 
 import dlmu.oa.base.BaseDaoImpl;
+import dlmu.oa.cfg.Configuration;
 import dlmu.oa.domain.Application;
 import dlmu.oa.domain.ApproveInfo;
+import dlmu.oa.domain.PageBean;
 import dlmu.oa.domain.TaskView;
 import dlmu.oa.domain.User;
 import dlmu.oa.service.ApplicationService;
@@ -61,10 +63,13 @@ public class ApplicationServiceImpl extends BaseDaoImpl<Application> implements 
 	}
 
 	@Override
-	public List<TaskView> getMyTaskViewList(User currentUser) {
+	public PageBean getMyTaskViewList(int pageNum,User currentUser) {
 		// 查询我的任务列表
 		String userId = currentUser.getLoginName(); //约定使用loginName作为JBPM用的用户标识符
-		List<Task> taskList = processEngine.getTaskService().findPersonalTasks(userId);
+		int currentPage = pageNum;
+		int pageSize = Configuration.getPageSize();
+		List<Task> taskList = processEngine.getTaskService().createTaskQuery().assignee(userId).page((currentPage-1)*pageSize, pageSize).list();
+		int recordCount = (int)processEngine.getTaskService().createTaskQuery().assignee(userId).count();
 		// 找出每个任务对应的申请信息
 		List<TaskView> resultList = new ArrayList<TaskView>();
 		for (Task task : taskList) {
@@ -72,9 +77,9 @@ public class ApplicationServiceImpl extends BaseDaoImpl<Application> implements 
 			//System.out.println("----------------->>>"+application.getApplicant().getName()+"-----------"+application.getTitle());
 			resultList.add(new TaskView(task, application));
 		}
-		
+		PageBean pageBean = new PageBean(currentPage, pageSize, resultList, recordCount);
 		// 返回“任务--申请信息”的结果
-		return resultList;
+		return pageBean;
 	}
 	
 	
